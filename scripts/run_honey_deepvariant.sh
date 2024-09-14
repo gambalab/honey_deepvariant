@@ -156,7 +156,7 @@ print_info "1/2 Honey Deepvariant Processing ${SAMPLE}..."
 for chr in ${REGIONS}
 do
    print_info "Processing chromosome ${chr}..."
-   intermediate_dir=$(mktemp -d --tmpdir="${tmpdir_chrs}")
+   intermediate_dir=$(mktemp -d --tmpdir="${OUTPUT_DIR}/${SAMPLE}")
 
    if [ ${GVCF} != "false" ]; then
       opt_args=" --output_gvcf=${tmpdir_chrs}/${chr}_honey_deepvariant_output.g.vcf.gz"
@@ -183,7 +183,7 @@ done
 if [ ${SEX} == "M" ]; then
    chr="chrX chrY"
    print_info "Processing chromosome ${chr}..."
-   intermediate_dir=$(mktemp -d --tmpdir="${tmpdir_chrs}")
+   intermediate_dir=$(mktemp -d --tmpdir="${OUTPUT_DIR}/${SAMPLE}")
 
    if [ ${GVCF} != "false" ]; then
       opt_args=" --output_gvcf=${tmpdir_chrs}/${chr}_honey_deepvariant_output.g.vcf.gz"
