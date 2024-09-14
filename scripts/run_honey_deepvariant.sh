@@ -144,9 +144,9 @@ else
 fi
 
 if [ ${SEX} == "M" ]; then
-   REGIONS="chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX"
-else
    REGIONS="chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22"
+else
+   REGIONS="chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX"
 fi
 
 
@@ -231,8 +231,10 @@ fi
 
 
 
-if [ ${CLEAN} == "true" ]; then 
+if [ "${CLEAN}" == "true" ]; then 
    rm -rf ${tmpdir_chrs}
+else
+   mv ${tmpdir_chrs} "${OUTPUT_DIR}/${SAMPLE}/vcf_split_by_chr"
 fi
 
 print_info "${SAMPLE} FINISHED!!"
