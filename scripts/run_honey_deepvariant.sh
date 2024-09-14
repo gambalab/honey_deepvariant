@@ -63,7 +63,7 @@ declare -i count=0
 FAST="true"
 GVCF="false"
 CLEAN="true"
-while getopts ":hg:f:s:t:m:o:b:x:r:" option; do
+while getopts ":hg:f:s:t:m:o:b:x:r:c:" option; do
    case $option in
       h) # display Help
          Help
@@ -180,7 +180,7 @@ do
 done
 
 
-if [ ${SEX} == "F" ]; then
+if [ ${SEX} == "M" ]; then
    chr="chrX chrY"
    print_info "Processing chromosome ${chr}..."
    intermediate_dir=$(mktemp -d --tmpdir="${tmpdir_chrs}")
