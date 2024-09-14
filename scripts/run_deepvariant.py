@@ -54,7 +54,7 @@ FLAGS = flags.FLAGS
 _MODEL_TYPE = flags.DEFINE_enum(
     'model_type',
     None,
-    ['WGS', 'WES', 'PACBIO', 'ONT_R104', 'HYBRID_PACBIO_ILLUMINA'],
+    ['HYBRID_ONT_R104_ILLUMINA', 'HYBRID_ONT_R904_ILLUMINA'],
     (
         'Required. Type of model to use for variant calling. Set this flag to'
         ' use the default model associated with each type, and it will set'
@@ -253,11 +253,8 @@ _REPORT_TITLE = flags.DEFINE_string(
 
 
 MODEL_TYPE_MAP = {
-    'WGS': '/opt/models/wgs',
-    'WES': '/opt/models/wes',
-    'PACBIO': '/opt/models/pacbio',
-    'ONT_R104': '/opt/models/ont_r104',
-    'HYBRID_PACBIO_ILLUMINA': '/opt/models/hybrid_pacbio_illumina',
+    'HYBRID_ONT_R104_ILLUMINA': '/opt/models/hybrid_ont_104_illumina',
+    'HYBRID_ONT_R904_ILLUMINA': '/opt/models/hybrid_ont_904_illumina',
 }
 
 # Current release version of DeepVariant.
