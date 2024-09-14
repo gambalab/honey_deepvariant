@@ -156,7 +156,7 @@ print_info "1/2 Honey Deepvariant Processing ${SAMPLE}..."
 for chr in ${REGIONS}
 do
    print_info "Processing chromosome ${chr}..."
-   intermediate_dir=$(mktemp -d --tmpdir="${OUTPUT_DIR}/${SAMPLE}")
+   #intermediate_dir=$(mktemp -d --tmpdir="${OUTPUT_DIR}/${SAMPLE}")
 
    if [ ${GVCF} != "false" ]; then
       opt_args=" --output_gvcf=${tmpdir_chrs}/${chr}_honey_deepvariant_output.g.vcf.gz"
@@ -172,18 +172,18 @@ do
         --output_vcf="${tmpdir_chrs}/${chr}_honey_deepvariant_output.vcf.gz" \
         --num_shards=${THREADS} \
         --regions ${chr} \
-        --intermediate_results_dir ${intermediate_dir} \
         --make_examples_extra_args=${vc_filter} $opt_args
+        # --intermediate_results_dir ${intermediate_dir}
    ) > "${OUTPUT_DIR}/${SAMPLE}/logs/${SAMPLE}_honey_deepvariant_${chr}.log" 2>&1
 
-   rm -rf ${intermediate_dir}
+   #rm -rf ${intermediate_dir}
 done
 
 
 if [ ${SEX} == "M" ]; then
    chr="chrX chrY"
    print_info "Processing chromosome ${chr}..."
-   intermediate_dir=$(mktemp -d --tmpdir="${OUTPUT_DIR}/${SAMPLE}")
+   #intermediate_dir=$(mktemp -d --tmpdir="${OUTPUT_DIR}/${SAMPLE}")
 
    if [ ${GVCF} != "false" ]; then
       opt_args=" --output_gvcf=${tmpdir_chrs}/${chr}_honey_deepvariant_output.g.vcf.gz"
@@ -199,13 +199,13 @@ if [ ${SEX} == "M" ]; then
         --output_vcf="${tmpdir_chrs}/${chr}_honey_deepvariant_output.vcf.gz" \
         --num_shards=${THREADS} \
         --regions ${chr} \
-        --intermediate_results_dir ${intermediate_dir} \
         --haploid_contigs="chrX,chrY" \
         --par_regions_bed="/opt/deepvariant/resource/GRCh38_PAR.bed" \
         --make_examples_extra_args=${vc_filter} $opt_args
+        # --intermediate_results_dir ${intermediate_dir}
    ) > "${OUTPUT_DIR}/${SAMPLE}/logs/${SAMPLE}_honey_deepvariant_chrXY.log" 2>&1
 
-   rm -rf ${intermediate_dir}
+   #rm -rf ${intermediate_dir}
 fi
 
 
@@ -227,6 +227,7 @@ if [ ${GVCF} != "false" ]; then
            bcftools sort - -o - | \
            bgzip -c > "${OUTPUT_DIR}/${SAMPLE}/${SAMPLE}_honey_deepvariant_output.g.vcf.gz"
    tabix -p vcf "${OUTPUT_DIR}/${SAMPLE}/${SAMPLE}_honey_deepvariant_output.g.vcf.gz"
+   rm ${tmpdir_chrs}/gvcf.list
 fi
 
 
@@ -234,6 +235,7 @@ fi
 if [ "${CLEAN}" == "true" ]; then 
    rm -rf ${tmpdir_chrs}
 else
+   rm ${tmpdir_chrs}/vcf.list
    mv ${tmpdir_chrs} "${OUTPUT_DIR}/${SAMPLE}/vcf_split_by_chr"
 fi
 
