@@ -196,7 +196,7 @@ if [ ${SEX} == "M" ]; then
         --model_type=${MODEL_TYPE} \
         --ref=${REF} \
         --reads=${BAM} \
-        --output_vcf="${tmpdir_chrs}/${chr}_honey_deepvariant_output.vcf.gz" \
+        --output_vcf="${tmpdir_chrs}/chrXY_honey_deepvariant_output.vcf.gz" \
         --num_shards=${THREADS} \
         --regions ${chr} \
         --haploid_contigs="chrX,chrY" \
