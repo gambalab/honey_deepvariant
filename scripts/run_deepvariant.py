@@ -38,6 +38,7 @@ https://github.com/google/deepvariant/blob/r1.6.1/docs/deepvariant-quick-start.m
 """
 
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -714,6 +715,7 @@ def main(_):
       if proc.returncode != 0:
         sys.exit(proc.returncode)
 
+  shutil.rmtree(intermediate_results_dir)
 
 if __name__ == '__main__':
   app.run(main)
