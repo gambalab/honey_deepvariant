@@ -51,7 +51,7 @@ Help()
    echo "-b     Path to the merged ONT-Illumina BAM file. (Required)"
    echo "-s     Sample name. (Required)"
    echo "-r     Path to the reference fasta file on which reads were aligned. (Required)"
-   echo "-f     Faster call. Default is true.  Use variant filters vsc_min_count_snps=2, vsc_min_fraction_snps=0.08, vsc_min_count_indels=2, vsc_min_fraction_indels=0.1 (Optional)"
+   echo "-f     Faster call. Default is false.  Use variant filters vsc_min_count_snps=3, vsc_min_fraction_snps=0.1, vsc_min_count_indels=3, vsc_min_fraction_indels=0.1 (Optional)"
    echo "-g     Output also the gvcf. Default false. (Optional)"
    echo "-c     Cleanup folder with single chromosomes. Default true. (Optional)"
    echo
@@ -60,7 +60,7 @@ Help()
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
 declare -i count=0
-FAST="true"
+FAST="false"
 GVCF="false"
 CLEAN="true"
 while getopts ":hg:f:s:t:m:o:b:x:r:c:" option; do
@@ -138,9 +138,9 @@ fi
 SEX=$(echo "${SEX}" | awk '{print toupper($0)}')
 
 if [ ${FAST} == "true" ]; then
- vc_filter="vsc_min_count_snps=2,vsc_min_fraction_snps=0.08,vsc_min_count_indels=2,vsc_min_fraction_indels=0.1"
+ vc_filter="--make_examples_extra_args=vsc_min_count_snps=3,vsc_min_fraction_snps=0.15,vsc_min_count_indels=3,vsc_min_fraction_indels=0.1"
 else
- vc_filter="vsc_min_count_snps=2,vsc_min_fraction_snps=0.05,vsc_min_count_indels=2,vsc_min_fraction_indels=0.05"
+ vc_filter=""
 fi
 
 if [ ${SEX} == "M" ]; then
@@ -171,8 +171,7 @@ do
         --reads=${BAM} \
         --output_vcf="${tmpdir_chrs}/${chr}_honey_deepvariant_output.vcf.gz" \
         --num_shards=${THREADS} \
-        --regions ${chr} \
-        --make_examples_extra_args=${vc_filter} $opt_args
+        --regions ${chr} "${vc_filter} ${opt_args}"
         # --intermediate_results_dir ${intermediate_dir}
    ) > "${OUTPUT_DIR}/${SAMPLE}/logs/${SAMPLE}_honey_deepvariant_${chr}.log" 2>&1
 
@@ -200,8 +199,7 @@ if [ ${SEX} == "M" ]; then
         --num_shards=${THREADS} \
         --regions ${chr} \
         --haploid_contigs="chrX,chrY" \
-        --par_regions_bed="/opt/deepvariant/resource/GRCh38_PAR.bed" \
-        --make_examples_extra_args=${vc_filter} $opt_args
+        --par_regions_bed="/opt/deepvariant/resource/GRCh38_PAR.bed" ${vc_filter} ${opt_args}
         # --intermediate_results_dir ${intermediate_dir}
    ) > "${OUTPUT_DIR}/${SAMPLE}/logs/${SAMPLE}_honey_deepvariant_chrXY.log" 2>&1
 
