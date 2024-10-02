@@ -39,9 +39,9 @@ clean_up(){
 Help()
 {
    # Display Help
-   echo "Add description of the script functions here."
+   echo "Hybrid Oxford Nanopore tEchnologY Deepvariant (HONEY Deepvariant)"
    echo
-   echo "Syntax: run_honey_deepvariant.sh [-g|h|s|t|f|w|o|b|sm|ref|d]"
+   echo "Syntax: run_honey_deepvariant.sh [-g|h|s|t|f|w|o|b|s|m|r|d]"
    echo "options:"
    echo "-h     Print this Help."
    echo "-x     sample sex. It can be M (male) or F (female). If male (Required)"
@@ -73,8 +73,8 @@ while getopts ":hg:f:s:t:m:o:b:x:r:c:" option; do
          ((count++))
          ;;
       f)
-	FAST=${OPTARG}
-	;;
+      	FAST=${OPTARG}
+      	;;
       t)
          THREADS=${OPTARG}
          ((count++))
